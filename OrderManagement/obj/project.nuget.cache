@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RNIdlQHQzDo=",
+  "dgSpecHash": "nCoZnBm8BP4=",
   "success": true,
   "projectFilePath": "E:\\Nuevos Proyectos 2025\\GestionPedidos\\OrderManagement\\OrderManagement.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,8 @@
     "C:\\Users\\moise\\.nuget\\packages\\mongodb.bson\\3.2.1\\mongodb.bson.3.2.1.nupkg.sha512",
     "C:\\Users\\moise\\.nuget\\packages\\mongodb.driver\\3.2.1\\mongodb.driver.3.2.1.nupkg.sha512",
     "C:\\Users\\moise\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
+    "C:\\Users\\moise\\.nuget\\packages\\npgsql\\9.0.3\\npgsql.9.0.3.nupkg.sha512",
+    "C:\\Users\\moise\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\9.0.4\\npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512",
     "C:\\Users\\moise\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",
     "C:\\Users\\moise\\.nuget\\packages\\snappier\\1.0.0\\snappier.1.0.0.nupkg.sha512",
     "C:\\Users\\moise\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
