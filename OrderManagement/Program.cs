@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using OrderManagement.Api.Data;
+using System.Reflection;
+using MediatR;
+using OrderManagement.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Agregar MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 // Configurar Entity Framework Core con PostgreSQL
 builder.Services.AddDbContext<OrderDbContext>(options =>
@@ -21,6 +27,12 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
                 errorCodesToAdd: null);
         }
     ));
+
+// Configurar MongoDB para consultas
+builder.Services.AddSingleton<MongoDbContext>();
+
+// Servicio de sincronización entre bases de datos
+builder.Services.AddScoped<MongoDbSyncService>();
 
 var app = builder.Build();
 
