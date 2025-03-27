@@ -1,0 +1,87 @@
+# Dependencies
+/node_modules
+/packages
+/vendor
+/.pnp
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+/build
+/dist
+/out
+/target
+/bin
+/obj
+/Release
+/Debug
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Testing
+/coverage
+/.nyc_output
+/htmlcov
+.hypothesis/
+.pytest_cache/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-*
+.vs/
+*~
+*.swp
+*.swo
+.project
+.classpath
+*.launch
+.settings/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+.env.development
+
+# Logs
+/logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+._*
+
+# Project specific
+/uploads
+/temp
+/tmp
+
+# Compiled source
+*.com
+*.class
+*.o
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
