@@ -143,3 +143,6 @@ E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\obj\Debug\net8.0\refint\
 E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\obj\Debug\net8.0\OrderManagement.pdb
 E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\obj\Debug\net8.0\OrderManagement.genruntimeconfig.cache
 E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\obj\Debug\net8.0\ref\OrderManagement.dll
+E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\bin\Debug\net8.0\OrderManagement.xml
+E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+E:\Nuevos Proyectos 2025\GestionPedidos\OrderManagement\obj\Debug\net8.0\OrderManagement.xml
