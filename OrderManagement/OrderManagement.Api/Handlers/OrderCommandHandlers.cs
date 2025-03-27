@@ -88,10 +88,12 @@ namespace OrderManagement.Api.Handlers
     public class UpdateOrderStatusHandler : IRequestHandler<UpdateOrderStatusCommand, bool>
     {
         private readonly OrderDbContext _context;
+        private readonly MongoDbSyncService _syncService;
 
-        public UpdateOrderStatusHandler(OrderDbContext context)
+        public UpdateOrderStatusHandler(OrderDbContext context, MongoDbSyncService syncService)
         {
             _context = context;
+            _syncService = syncService;
         }
 
         public async Task<bool> Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
@@ -104,6 +106,10 @@ namespace OrderManagement.Api.Handlers
 
             order.Status = request.NewStatus;
             await _context.SaveChangesAsync(cancellationToken);
+            
+            // Sincronizar con MongoDB
+            await _syncService.SyncOrderAsync(order);
+            
             return true;
         }
     }
@@ -111,10 +117,12 @@ namespace OrderManagement.Api.Handlers
     public class CancelOrderHandler : IRequestHandler<CancelOrderCommand, bool>
     {
         private readonly OrderDbContext _context;
+        private readonly MongoDbSyncService _syncService;
 
-        public CancelOrderHandler(OrderDbContext context)
+        public CancelOrderHandler(OrderDbContext context, MongoDbSyncService syncService)
         {
             _context = context;
+            _syncService = syncService;
         }
 
         public async Task<bool> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
@@ -148,6 +156,10 @@ namespace OrderManagement.Api.Handlers
 
             order.Status = OrderStatus.Cancelled;
             await _context.SaveChangesAsync(cancellationToken);
+            
+            // Sincronizar con MongoDB
+            await _syncService.SyncOrderAsync(order);
+            
             return true;
         }
     }
