@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\Nuevos Proyectos 2025\\GestionPedidos\\OrderManagement\\wwwroot\\openapi\\openapi.json",
+      "PackagePath": "staticwebassets\\openapi\\openapi.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.OrderManagement.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.OrderManagement.props",
+      "PackagePath": "build\\OrderManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.OrderManagement.props",
+      "PackagePath": "buildMultiTargeting\\OrderManagement.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.OrderManagement.props",
+      "PackagePath": "buildTransitive\\OrderManagement.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

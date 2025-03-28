@@ -1,41 +1,36 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.DependencyInjection;
 using OrderManagement.Api.Data;
 using System.Reflection;
 using MediatR;
 using OrderManagement.Api.Services;
+//using OrderManagement.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar CORS para permitir peticiones desde Swagger UI
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 // Agregar servicios al contenedor
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "API de Gestión de Pedidos",
-        Version = "v1", 
-        Description = "API para la gestión de pedidos con arquitectura CQRS"
-    });
-    
-    // Especificar la versión OpenAPI
-    c.DocInclusionPredicate((docName, apiDesc) => true);
-    
-    // Incluir los comentarios XML de documentación
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        c.IncludeXmlComments(xmlPath);
-    }
-    
-    // Configurar para que busque controladores en todos los assemblies cargados
-    c.EnableAnnotations();
-});
+
+// Configurar Swagger para usar el archivo JSON estático en lugar de generarlo dinámicamente
+builder.Services.AddSwaggerGen();
 
 // Agregar MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 // Configurar Entity Framework Core con PostgreSQL
 builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseNpgsql(
@@ -61,30 +56,42 @@ var app = builder.Build();
 // Configurar el pipeline de HTTP request
 if (app.Environment.IsDevelopment())
 {
+    // Aplicar política CORS
+    app.UseCors("AllowAll");
+
+    // Configura Swagger para usar un archivo JSON estático
     app.UseSwagger(c =>
     {
-        c.RouteTemplate = "swagger/{documentName}/swagger.json";
+        c.RouteTemplate = "api-docs/{documentName}/swagger.json";
     });
     
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Gestión de Pedidos v1");
-        c.RoutePrefix = "swagger";
+        // Usar el archivo JSON estático en lugar del generado
+        c.SwaggerEndpoint("/openapi/openapi.json", "API de Gestión de Pedidos v1");
+        c.RoutePrefix = "api-docs";
+        c.DocumentTitle = "Documentación API - Sistema de Gestión de Pedidos";
+        c.DefaultModelsExpandDepth(2);
+        c.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
+        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+        c.EnableDeepLinking();
+        c.DisplayRequestDuration();
     });
 }
+
+// Habilitar el servicio de archivos estáticos para servir el archivo openapi.json
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+    RequestPath = ""
+});
+
+// Agrega la validación OpenAPI (opcional pero recomendado)
+//app.UseOpenApiValidation(); 
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-
-
-
-
-
-
-
-

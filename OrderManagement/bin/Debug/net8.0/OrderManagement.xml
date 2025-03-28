@@ -16,5 +16,190 @@
         <member name="M:OrderManagement.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:OrderManagement.Api.Commands.CreateCustomerCommand">
+            <summary>
+            Comando para crear un nuevo cliente en el sistema.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateCustomerCommand.Name">
+            <summary>
+            Nombre completo del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateCustomerCommand.Email">
+            <summary>
+            Dirección de correo electrónico del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateCustomerCommand.Address">
+            <summary>
+            Dirección postal del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateCustomerCommand.Phone">
+            <summary>
+            Número de teléfono del cliente.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.UpdateCustomerCommand">
+            <summary>
+            Comando para actualizar la información de un cliente existente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateCustomerCommand.Id">
+            <summary>
+            Identificador único del cliente a actualizar.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateCustomerCommand.Name">
+            <summary>
+            Nombre actualizado del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateCustomerCommand.Email">
+            <summary>
+            Dirección de correo electrónico actualizada del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateCustomerCommand.Address">
+            <summary>
+            Dirección postal actualizada del cliente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateCustomerCommand.Phone">
+            <summary>
+            Número de teléfono actualizado del cliente.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.DeleteCustomerCommand">
+            <summary>
+            Comando para eliminar un cliente del sistema.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.DeleteCustomerCommand.Id">
+            <summary>
+            Identificador único del cliente a eliminar.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.CreateOrderCommand">
+            <summary>
+            Comando para crear un nuevo pedido en el sistema.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateOrderCommand.CustomerId">
+            <summary>
+            Identificador único del cliente que realiza el pedido.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateOrderCommand.Items">
+            <summary>
+            Lista de productos incluidos en el pedido.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.CreateOrderCommand.OrderItemDto">
+            <summary>
+            Representa un ítem individual dentro de un pedido.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateOrderCommand.OrderItemDto.ProductId">
+            <summary>
+            Identificador único del producto solicitado.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateOrderCommand.OrderItemDto.Quantity">
+            <summary>
+            Cantidad solicitada del producto.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.UpdateOrderStatusCommand">
+            <summary>
+            Comando para actualizar el estado de un pedido existente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateOrderStatusCommand.OrderId">
+            <summary>
+            Identificador único del pedido a actualizar.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateOrderStatusCommand.NewStatus">
+            <summary>
+            Nuevo estado que se asignará al pedido.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.CancelOrderCommand">
+            <summary>
+            Comando para cancelar un pedido existente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CancelOrderCommand.OrderId">
+            <summary>
+            Identificador único del pedido a cancelar.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.CreateProductCommand">
+            <summary>
+            Comando para crear un nuevo producto en el sistema.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateProductCommand.Name">
+            <summary>
+            Nombre del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateProductCommand.Description">
+            <summary>
+            Descripción detallada del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateProductCommand.Price">
+            <summary>
+            Precio de venta del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.CreateProductCommand.StockQuantity">
+            <summary>
+            Cantidad disponible en inventario.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.UpdateProductCommand">
+            <summary>
+            Comando para actualizar la información de un producto existente.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateProductCommand.Id">
+            <summary>
+            Identificador único del producto a actualizar.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateProductCommand.Name">
+            <summary>
+            Nombre actualizado del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateProductCommand.Description">
+            <summary>
+            Descripción actualizada del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateProductCommand.Price">
+            <summary>
+            Precio actualizado del producto.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.UpdateProductCommand.StockQuantity">
+            <summary>
+            Cantidad actualizada en inventario.
+            </summary>
+        </member>
+        <member name="T:OrderManagement.Api.Commands.DeleteProductCommand">
+            <summary>
+            Comando para eliminar un producto del sistema.
+            </summary>
+        </member>
+        <member name="P:OrderManagement.Api.Commands.DeleteProductCommand.Id">
+            <summary>
+            Identificador único del producto a eliminar.
+            </summary>
+        </member>
     </members>
 </doc>

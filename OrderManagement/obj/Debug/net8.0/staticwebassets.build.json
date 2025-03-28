@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "osxJVH1DFLLqtTh1wCk0+MRHjSQkOqErQSqGSGcof4Q=",
+  "Hash": "jLuNsjdyu7X4/p9tkA8YGyOHF3p2ap1+tswuBq8ppmQ=",
   "Source": "OrderManagement",
   "BasePath": "_content/OrderManagement",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "OrderManagement\\wwwroot",
+      "Source": "OrderManagement",
+      "ContentRoot": "E:\\Nuevos Proyectos 2025\\GestionPedidos\\OrderManagement\\wwwroot\\",
+      "BasePath": "_content/OrderManagement",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\Nuevos Proyectos 2025\\GestionPedidos\\OrderManagement\\wwwroot\\openapi\\openapi.json",
+      "SourceId": "OrderManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Nuevos Proyectos 2025\\GestionPedidos\\OrderManagement\\wwwroot\\",
+      "BasePath": "_content/OrderManagement",
+      "RelativePath": "openapi/openapi.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\openapi\\openapi.json"
+    }
+  ]
 }

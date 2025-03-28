@@ -1,0 +1,912 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "API de Gestión de Pedidos",
+      "version": "v1",
+      "description": "API REST para la gestión de pedidos con arquitectura CQRS",
+      "contact": {
+        "name": "Equipo de Desarrollo",
+        "email": "desarrollo@empresa.com",
+        "url": "https://www.empresa.com/contacto"
+      },
+      "license": {
+        "name": "Licencia Privada",
+        "url": "https://www.empresa.com/licencia"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://localhost:7268",
+        "description": "Servidor de desarrollo HTTPS"
+      },
+      {
+        "url": "http://localhost:5147",
+        "description": "Servidor de desarrollo HTTP"
+      }
+    ],
+    "paths": {
+      "/api/Customers": {
+        "get": {
+          "tags": ["Clientes"],
+          "summary": "Obtiene todos los clientes",
+          "operationId": "Customers_GetAll",
+          "responses": {
+            "200": {
+              "description": "Lista de clientes obtenida correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CustomerReadModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Clientes"],
+          "summary": "Crea un nuevo cliente",
+          "operationId": "Customers_Create",
+          "requestBody": {
+            "description": "Datos del nuevo cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomerCommand"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Cliente creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            }
+          }
+        }
+      },
+      "/api/Customers/{id}": {
+        "get": {
+          "tags": ["Clientes"],
+          "summary": "Obtiene un cliente por su ID",
+          "operationId": "Customers_GetById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del cliente",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cliente encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CustomerReadModel"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Cliente no encontrado"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Clientes"],
+          "summary": "Actualiza un cliente existente",
+          "operationId": "Customers_Update",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del cliente",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Datos actualizados del cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerCommand"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "204": {
+              "description": "Cliente actualizado correctamente"
+            },
+            "400": {
+              "description": "ID no coincide con el cuerpo de la solicitud"
+            },
+            "404": {
+              "description": "Cliente no encontrado"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Clientes"],
+          "summary": "Elimina un cliente",
+          "operationId": "Customers_Delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del cliente",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Cliente eliminado correctamente"
+            },
+            "404": {
+              "description": "Cliente no encontrado"
+            }
+          }
+        }
+      },
+      "/api/Orders": {
+        "get": {
+          "tags": ["Pedidos"],
+          "summary": "Obtiene todos los pedidos",
+          "operationId": "Orders_GetAll",
+          "responses": {
+            "200": {
+              "description": "Lista de pedidos obtenida correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/OrderReadModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Pedidos"],
+          "summary": "Crea un nuevo pedido",
+          "operationId": "Orders_Create",
+          "requestBody": {
+            "description": "Datos del nuevo pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrderCommand"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Pedido creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            }
+          }
+        }
+      },
+      "/api/Orders/{id}": {
+        "get": {
+          "tags": ["Pedidos"],
+          "summary": "Obtiene un pedido por su ID",
+          "operationId": "Orders_GetById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del pedido",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Pedido encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderReadModel"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Pedido no encontrado"
+            }
+          }
+        }
+      },
+      "/api/Orders/{id}/status": {
+        "put": {
+          "tags": ["Pedidos"],
+          "summary": "Actualiza el estado de un pedido",
+          "operationId": "Orders_UpdateStatus",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del pedido",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Nuevo estado del pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderStatus"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "204": {
+              "description": "Estado del pedido actualizado correctamente"
+            },
+            "404": {
+              "description": "Pedido no encontrado"
+            }
+          }
+        }
+      },
+      "/api/Orders/customer/{customerId}": {
+        "get": {
+          "tags": ["Pedidos"],
+          "summary": "Obtiene pedidos por cliente",
+          "operationId": "Orders_GetByCustomer",
+          "parameters": [
+            {
+              "name": "customerId",
+              "in": "path",
+              "description": "ID del cliente",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de pedidos del cliente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/OrderReadModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Products": {
+        "get": {
+          "tags": ["Productos"],
+          "summary": "Obtiene todos los productos",
+          "operationId": "Products_GetAll",
+          "responses": {
+            "200": {
+              "description": "Lista de productos obtenida correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductReadModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Productos"],
+          "summary": "Crea un nuevo producto",
+          "operationId": "Products_Create",
+          "requestBody": {
+            "description": "Datos del nuevo producto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProductCommand"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Producto creado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            }
+          }
+        }
+      },
+      "/api/Products/{id}": {
+        "get": {
+          "tags": ["Productos"],
+          "summary": "Obtiene un producto por su ID",
+          "operationId": "Products_GetById",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del producto",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Producto encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProductReadModel"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Producto no encontrado"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Productos"],
+          "summary": "Actualiza un producto existente",
+          "operationId": "Products_Update",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del producto",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Datos actualizados del producto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProductCommand"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "204": {
+              "description": "Producto actualizado correctamente"
+            },
+            "400": {
+              "description": "ID no coincide con el cuerpo de la solicitud"
+            },
+            "404": {
+              "description": "Producto no encontrado"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Productos"],
+          "summary": "Elimina un producto",
+          "operationId": "Products_Delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del producto",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Producto eliminado correctamente"
+            },
+            "404": {
+              "description": "Producto no encontrado"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "CustomerReadModel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único del cliente"
+            },
+            "name": {
+              "type": "string",
+              "description": "Nombre completo del cliente"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Correo electrónico del cliente"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Número de teléfono del cliente"
+            },
+            "address": {
+              "type": "string",
+              "description": "Dirección postal del cliente"
+            },
+            "orders": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderSummary"
+              },
+              "description": "Listado resumido de pedidos del cliente"
+            }
+          },
+          "required": ["id", "name", "email"]
+        },
+        "Customer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único del cliente"
+            },
+            "name": {
+              "type": "string",
+              "description": "Nombre completo del cliente"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Correo electrónico del cliente"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Número de teléfono del cliente"
+            },
+            "address": {
+              "type": "string",
+              "description": "Dirección postal del cliente"
+            }
+          },
+          "required": ["id", "name", "email"]
+        },
+        "CreateCustomerCommand": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Nombre completo del cliente"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Correo electrónico del cliente"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Número de teléfono del cliente"
+            },
+            "address": {
+              "type": "string",
+              "description": "Dirección postal del cliente"
+            }
+          },
+          "required": ["name", "email"]
+        },
+        "UpdateCustomerCommand": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único del cliente"
+            },
+            "name": {
+              "type": "string",
+              "description": "Nombre completo del cliente"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Correo electrónico del cliente"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Número de teléfono del cliente"
+            },
+            "address": {
+              "type": "string",
+              "description": "Dirección postal del cliente"
+            }
+          },
+          "required": ["id", "name", "email"]
+        },
+        "OrderStatus": {
+          "type": "string",
+          "enum": ["Pendiente", "Procesando", "Enviado", "Entregado", "Cancelado"],
+          "description": "Estado posible de un pedido"
+        },
+        "OrderReadModel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único del pedido"
+            },
+            "orderNumber": {
+              "type": "string",
+              "description": "Número de pedido"
+            },
+            "customerId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "ID del cliente que realizó el pedido"
+            },
+            "customerName": {
+              "type": "string",
+              "description": "Nombre del cliente que realizó el pedido"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Fecha en que se realizó el pedido"
+            },
+            "status": {
+              "$ref": "#/components/schemas/OrderStatus"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "decimal",
+              "description": "Importe total del pedido"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderItemReadModel"
+              },
+              "description": "Líneas de detalle del pedido"
+            }
+          },
+          "required": ["id", "orderNumber", "customerId", "orderDate", "status", "totalAmount"]
+        },
+        "OrderSummary": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderNumber": {
+              "type": "string"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "$ref": "#/components/schemas/OrderStatus"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "decimal"
+            }
+          }
+        },
+        "Order": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderNumber": {
+              "type": "string"
+            },
+            "customerId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "$ref": "#/components/schemas/OrderStatus"
+            },
+            "totalAmount": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/OrderItem"
+              }
+            }
+          }
+        },
+        "OrderItem": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "unitPrice": {
+              "type": "number",
+              "format": "decimal"
+            }
+          }
+        },
+        "OrderItemReadModel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productId": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "productName": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "unitPrice": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "subtotal": {
+              "type": "number",
+              "format": "decimal"
+            }
+          }
+        },
+        "CreateOrderCommand": {
+          "type": "object",
+          "properties": {
+            "customerId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "ID del cliente que realiza el pedido"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CreateOrderItemCommand"
+              },
+              "description": "Lista de productos en el pedido"
+            }
+          },
+          "required": ["customerId", "items"]
+        },
+        "CreateOrderItemCommand": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "ID del producto"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32",
+              "description": "Cantidad del producto"
+            }
+          },
+          "required": ["productId", "quantity"]
+        },
+        "ProductReadModel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "stockQuantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "Product": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "stockQuantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "CreateProductCommand": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "stockQuantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "category": {
+              "type": "string"
+            }
+          },
+          "required": ["name", "price", "stockQuantity"]
+        },
+        "UpdateProductCommand": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "stockQuantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "category": {
+              "type": "string"
+            }
+          },
+          "required": ["id", "name", "price", "stockQuantity"]
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "apiKey",
+          "description": "JWT Authorization header using the Bearer scheme",
+          "name": "Authorization",
+          "in": "header",
+          "scheme": "Bearer"
+        }
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ]
+  }
